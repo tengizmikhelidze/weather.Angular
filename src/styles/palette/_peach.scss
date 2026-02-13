@@ -1,0 +1,39 @@
+$peach-50: hsl(25, 100%, 97%);
+$peach-100: hsl(25, 100%, 92%);
+$peach-200: hsl(25, 95%, 85%);
+$peach-300: hsl(25, 90%, 75%);
+$peach-400: hsl(25, 85%, 65%);
+$peach-500: hsl(25, 80%, 55%);
+$peach-600: hsl(25, 75%, 45%);
+$peach-700: hsl(25, 70%, 35%);
+$peach-800: hsl(25, 65%, 25%);
+$peach-900: hsl(25, 60%, 15%);
+
+$peach-neutral-900: hsl(25, 30%, 10%);
+$peach-neutral-800: hsl(25, 25%, 20%);
+$peach-neutral-700: hsl(25, 20%, 30%);
+$peach-neutral-600: hsl(25, 15%, 40%);
+$peach-neutral-300: hsl(25, 10%, 65%);
+$peach-neutral-200: hsl(25, 12%, 82%);
+$peach-neutral-0: hsl(0, 0%, 100%);
+
+$peach-orange-500: hsl(20, 100%, 58%);
+
+$peach-blue-500: hsl(200, 70%, 55%);
+$peach-blue-700: hsl(200, 75%, 40%);
+
+.palette-peach {
+  --palette-neutral-900: #{$peach-neutral-900};
+  --palette-neutral-800: #{$peach-neutral-800};
+  --palette-neutral-700: #{$peach-neutral-700};
+  --palette-neutral-600: #{$peach-neutral-600};
+  --palette-neutral-300: #{$peach-neutral-300};
+  --palette-neutral-200: #{$peach-neutral-200};
+  --palette-neutral-0: #{$peach-neutral-0};
+
+  --palette-orange-500: #{$peach-orange-500};
+
+  --palette-blue-500: #{$peach-blue-500};
+  --palette-blue-700: #{$peach-blue-700};
+}
+

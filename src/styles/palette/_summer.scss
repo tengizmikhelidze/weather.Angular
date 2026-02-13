@@ -1,0 +1,39 @@
+$summer-50: hsl(180, 85%, 97%);
+$summer-100: hsl(180, 80%, 92%);
+$summer-200: hsl(180, 75%, 85%);
+$summer-300: hsl(180, 70%, 70%);
+$summer-400: hsl(180, 65%, 60%);
+$summer-500: hsl(180, 60%, 50%);
+$summer-600: hsl(180, 65%, 40%);
+$summer-700: hsl(180, 70%, 30%);
+$summer-800: hsl(180, 75%, 20%);
+$summer-900: hsl(180, 80%, 12%);
+
+$summer-neutral-900: hsl(200, 30%, 12%);
+$summer-neutral-800: hsl(200, 25%, 22%);
+$summer-neutral-700: hsl(200, 20%, 32%);
+$summer-neutral-600: hsl(200, 15%, 42%);
+$summer-neutral-300: hsl(200, 10%, 68%);
+$summer-neutral-200: hsl(200, 12%, 84%);
+$summer-neutral-0: hsl(0, 0%, 100%);
+
+$summer-orange-500: hsl(35, 100%, 55%);
+
+$summer-blue-500: hsl(195, 80%, 55%);
+$summer-blue-700: hsl(195, 85%, 40%);
+
+.palette-summer {
+  --palette-neutral-900: #{$summer-neutral-900};
+  --palette-neutral-800: #{$summer-neutral-800};
+  --palette-neutral-700: #{$summer-neutral-700};
+  --palette-neutral-600: #{$summer-neutral-600};
+  --palette-neutral-300: #{$summer-neutral-300};
+  --palette-neutral-200: #{$summer-neutral-200};
+  --palette-neutral-0: #{$summer-neutral-0};
+
+  --palette-orange-500: #{$summer-orange-500};
+
+  --palette-blue-500: #{$summer-blue-500};
+  --palette-blue-700: #{$summer-blue-700};
+}
+

@@ -1,0 +1,64 @@
+<div class="theme-picker">
+  <header class="theme-picker__header">
+    <h1>Theme Customization</h1>
+    <p class="theme-picker__description">
+      Customize your weather app experience by choosing your preferred theme and color palette.
+    </p>
+  </header>
+
+  <div class="theme-picker__controls">
+    <section class="control-section">
+      <h2 class="control-section__label">Theme Mode</h2>
+      <div class="button-group">
+        <button
+          (click)="setTheme('dark')"
+          [class.button-group__button--active]="theme.currentTheme() === 'dark'"
+          class="button-group__button">
+          <span class="button-group__icon">🌙</span>
+          <span>Dark</span>
+        </button>
+        <button
+          (click)="setTheme('light')"
+          [class.button-group__button--active]="theme.currentTheme() === 'light'"
+          class="button-group__button">
+          <span class="button-group__icon">☀️</span>
+          <span>Light</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="control-section">
+      <h2 class="control-section__label">Color Palette</h2>
+      <div class="button-group">
+        <button
+          (click)="setPalette('default')"
+          [class.button-group__button--active]="theme.currentPalette() === 'default'"
+          class="button-group__button">
+          <span>Default</span>
+        </button>
+        <button
+          (click)="setPalette('peach')"
+          [class.button-group__button--active]="theme.currentPalette() === 'peach'"
+          class="button-group__button">
+          <span class="button-group__icon">🍑</span>
+          <span>Peach</span>
+        </button>
+        <button
+          (click)="setPalette('summer')"
+          [class.button-group__button--active]="theme.currentPalette() === 'summer'"
+          class="button-group__button">
+          <span class="button-group__icon">🌊</span>
+          <span>Summer</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="theme-picker__status">
+    <span class="theme-picker__status-icon">✨</span>
+    <p>
+      Current: <strong>{{ theme.currentTheme() }}</strong> theme with
+      <strong>{{ theme.currentPalette() }}</strong> palette
+    </p>
+  </div>
+</div>
