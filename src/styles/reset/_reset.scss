@@ -5,6 +5,7 @@
 *::after {
   box-sizing: border-box;
   font-family: 'DM Sans', sans-serif;
+  font-size: var(--font-size-xs);
 }
 
 * {
@@ -18,8 +19,8 @@ html {
   text-size-adjust: none;
 }
 
-ul[role='list'],
-ol[role='list'] {
+ul,
+ol {
   list-style: none;
 }
 

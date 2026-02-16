@@ -16,42 +16,37 @@
   position: relative;
   box-sizing: border-box;
   border-radius: var(--border-radius-sm);
-  margin: 0 1px;
 
   // Size variants - Mobile first
   &--sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    padding: var(--spacing-2) var(--spacing-4);
 
     @include responsive.responsive_from('sm') {
-      padding: 0.625rem 1.25rem;
+      padding: var(--spacing-3) var(--spacing-5);
     }
   }
 
   &--md {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: var(--spacing-3) var(--spacing-6);
 
     @include responsive.responsive_from('sm') {
-      padding: 0.875rem 1.75rem;
+      padding: var(--spacing-3) var(--spacing-7);
     }
 
     @include responsive.responsive_from('md') {
-      padding: 1rem 2rem;
+      padding: var(--spacing-4) var(--spacing-8);
     }
   }
 
   &--lg {
-    padding: 1rem 2rem;
-    font-size: 1.125rem;
+    padding: var(--spacing-4) var(--spacing-8);
 
     @include responsive.responsive_from('sm') {
-      padding: 1.125rem 2.25rem;
-      font-size: 1.25rem;
+      padding: var(--spacing-5) var(--spacing-9);
     }
 
     @include responsive.responsive_from('md') {
-      padding: 1.25rem 2.5rem;
+      padding: var(--spacing-6) var(--spacing-10);
     }
   }
 
