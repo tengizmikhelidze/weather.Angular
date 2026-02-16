@@ -15,6 +15,10 @@ export const featuresRoutes: Routes = [
     loadComponent: () => import('./theme-picker/theme-picker').then(m => m.ThemePicker),
   },
   {
+    path: 'storybook',
+    loadChildren: () => import('./storybook/storybook.routes').then(m => m.storybookRoutes),
+  },
+  {
     path: 'not-found',
     loadComponent: () => import('./not-found/not-found').then(m => m.NotFound),
   },

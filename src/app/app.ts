@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {Header} from "./features/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header],
   template: `
     <div class="app-container">
+      <div class="app__header">
+        <app-header></app-header>
+      </div>
       <router-outlet />
     </div>
   `,
@@ -15,6 +19,12 @@ import { RouterOutlet } from '@angular/router';
       background-color: var(--color-background);
       color: var(--color-text-primary);
       transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .app {
+      &__header {
+        width: 100%;
+      }
     }
   `,
 })

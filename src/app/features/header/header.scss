@@ -1,0 +1,44 @@
+@use 'mixins/responsive.mixins' as responsive;
+
+header {
+  height: 60px;
+  width: 100%;
+  padding: var(--spacing-3);
+  display: flex;
+  justify-content: space-between;
+
+  .column {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &__right {
+      justify-content: flex-end;
+    }
+  }
+}
+
+#header-logo {
+  img {
+    // Mobile-first: smallest size
+    width: 120px;
+    height: auto;
+
+    // Tablet and up
+    @include responsive.responsive_from('sm') {
+      width: 150px;
+    }
+
+    // Desktop and up
+    @include responsive.responsive_from('md') {
+      width: 180px;
+    }
+
+    // Large desktop and up
+    @include responsive.responsive_from('lg') {
+      width: 197px;
+    }
+  }
+}
+
