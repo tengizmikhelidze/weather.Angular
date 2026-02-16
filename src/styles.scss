@@ -4,6 +4,7 @@
 @use 'variables/spacing' as spacing;
 @use 'variables/breakpoints' as bp;
 @use 'variables/typography' as typo;
+@use 'variables/border-radius' as radius;
 @use 'mixins/css-variables.mixins' as css-vars;
 
 :root {
@@ -12,6 +13,9 @@
 
   // Breakpoint variables
   @include css-vars.generate-css-vars(bp.$breakpoints, 'breakpoint-');
+
+  // Border radius variables
+  @include css-vars.generate-css-vars(radius.$border-radius, 'border-radius-');
 
   // Typography variables
   @include css-vars.generate-css-vars(typo.$font-weights, 'font-weight-');
