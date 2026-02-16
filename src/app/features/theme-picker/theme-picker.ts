@@ -1,5 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { Theme, ThemeType, PaletteType } from '../../core/theme';
+import { ThemeService, ThemeType, PaletteType } from '../../core/theme';
 
 @Component({
   selector: 'app-theme-picker',
@@ -9,7 +9,7 @@ import { Theme, ThemeType, PaletteType } from '../../core/theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemePicker {
-  protected readonly theme = inject(Theme);
+  protected readonly theme = inject(ThemeService);
 
   protected setTheme(theme: ThemeType): void {
     this.theme.setTheme(theme);

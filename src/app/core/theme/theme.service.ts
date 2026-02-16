@@ -1,11 +1,11 @@
-import { Injectable, signal, effect, PLATFORM_ID, inject } from '@angular/core';
+import {Injectable, signal, effect, PLATFORM_ID, inject, computed, Signal} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ThemeType, PaletteType, ThemeStorageKeys } from './theme.types';
+import {ThemeType, PaletteType, ThemeStorageKeys, ThemeConfig} from './theme.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Theme {
+export class ThemeService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly storageKeys: ThemeStorageKeys = {
     theme: 'app-theme',
@@ -14,6 +14,13 @@ export class Theme {
 
   readonly currentTheme = signal<ThemeType>(this.getInitialTheme());
   readonly currentPalette = signal<PaletteType>(this.getInitialPalette());
+
+  readonly themeConfig: Signal<ThemeConfig> = computed(()=> {
+    return {
+      theme: this.currentTheme(),
+      palette: this.currentPalette()
+    }
+  })
 
   constructor() {
     effect(() => {
