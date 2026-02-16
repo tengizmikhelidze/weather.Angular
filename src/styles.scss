@@ -1,3 +1,26 @@
 @use 'styles/reset/reset';
 @use 'styles/palette/palette';
 @use 'styles/theme/theme';
+@use 'variables/spacing' as spacing;
+@use 'variables/breakpoints' as bp;
+@use 'variables/typography' as typo;
+@use 'mixins/css-variables.mixins' as css-vars;
+
+:root {
+  // Spacing variables
+  @include css-vars.generate-css-vars(spacing.$spacing, 'spacing-');
+
+  // Breakpoint variables
+  @include css-vars.generate-css-vars(bp.$breakpoints, 'breakpoint-');
+
+  // Typography variables
+  @include css-vars.generate-css-vars(typo.$font-weights, 'font-weight-');
+  @include css-vars.generate-css-vars(typo.$font-sizes, 'font-size-');
+  @include css-vars.generate-css-vars(typo.$line-heights, 'line-height-');
+  @include css-vars.generate-css-vars(typo.$letter-spacings, 'letter-spacing-');
+
+  // Font families (separate handling due to multi-value)
+  @each $name, $value in typo.$font-families {
+    --font-family-#{$name}: #{$value};
+  }
+}

@@ -1,0 +1,6 @@
+// Generate CSS custom properties from a SCSS map
+@mixin generate-css-vars($map, $prefix: '') {
+  @each $key, $value in $map {
+    --#{$prefix}#{$key}: #{$value};
+  }
+}
