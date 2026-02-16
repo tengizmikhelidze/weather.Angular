@@ -1,0 +1,22 @@
+@use '../variables/breakpoints' as bp;
+
+// Mobile-first: styles apply from breakpoint and up
+@mixin responsive_from($breakpoint) {
+  @media (min-width: bp.breakpoint($breakpoint)) {
+    @content;
+  }
+}
+
+// Desktop-first: styles apply up to breakpoint (use sparingly)
+@mixin responsive_until($breakpoint) {
+  @media (max-width: calc(bp.breakpoint($breakpoint) - 1px)) {
+    @content;
+  }
+}
+
+// Range between two breakpoints
+@mixin responsive_between($min-breakpoint, $max-breakpoint) {
+  @media (min-width: bp.breakpoint($min-breakpoint)) and (max-width: calc(bp.breakpoint($max-breakpoint) - 1px)) {
+    @content;
+  }
+}
