@@ -1,11 +1,12 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, effect, input, signal} from '@angular/core';
 import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
 import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
 import {Button, ButtonVariant} from "../../buttons";
 import {NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
-import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "../enums/units-enums";
+import {PrecipitationUnitsEnums, TemperatureUnitsEnums, UnitsState, WindUnitsEnums} from "../enums/units-enums";
+import {loadFromStorage, UNITS_STORAGE_KEY} from "../utils/units-utils";
 
 @Component({
     selector: 'app-units',
@@ -62,9 +63,9 @@ export class Units {
 
     buttonVariant = input<ButtonVariant>('secondary')
 
-    temperature = signal<TemperatureUnitsEnums>(TemperatureUnitsEnums.CELSIUS)
-    wind = signal<WindUnitsEnums>(WindUnitsEnums.KMH)
-    precipitation = signal<PrecipitationUnitsEnums>(PrecipitationUnitsEnums.MM)
+    temperature = signal<TemperatureUnitsEnums>(loadFromStorage().temperature)
+    wind = signal<WindUnitsEnums>(loadFromStorage().wind)
+    precipitation = signal<PrecipitationUnitsEnums>(loadFromStorage().precipitation)
 
     protected readonly items: MenuItem[] = [
         {
@@ -133,6 +134,17 @@ export class Units {
             ]
         },
     ];
+
+    constructor() {
+        effect(() => {
+            const state: UnitsState = {
+                temperature: this.temperature(),
+                wind: this.wind(),
+                precipitation: this.precipitation(),
+            };
+            localStorage.setItem(UNITS_STORAGE_KEY, JSON.stringify(state));
+        });
+    }
 
     switchToImperial = (event: MenuItemCommandEvent) => {
         this.temperature.set(TemperatureUnitsEnums.FAHRENHEIT)

@@ -12,3 +12,9 @@ export enum PrecipitationUnitsEnums {
     MM = 'mm',
     IN = 'in'
 }
+
+export interface UnitsState {
+    temperature: TemperatureUnitsEnums;
+    wind: WindUnitsEnums;
+    precipitation: PrecipitationUnitsEnums;
+}
