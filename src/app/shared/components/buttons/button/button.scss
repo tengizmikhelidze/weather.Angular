@@ -27,7 +27,7 @@
   }
 
   &--md {
-    padding: var(--spacing-3) var(--spacing-6);
+    padding: var(--spacing-3) var(--spacing-5);
 
     @include responsive.responsive_from('sm') {
       padding: var(--spacing-3) var(--spacing-7);

@@ -16,6 +16,10 @@ export const storybookRoutes: Routes = [
                 loadComponent: () => import('./menu-storybook/menu-storybook').then(m => m.MenuStorybook),
             },
             {
+                path: 'units',
+                loadComponent: () => import('./units-storybook/units-storybook').then(m => m.UnitsStorybook),
+            },
+            {
                 path: 'buttons',
                 loadComponent: () => import('./buttons-storybook/buttons-storybook').then(m => m.ButtonsStorybook),
             },

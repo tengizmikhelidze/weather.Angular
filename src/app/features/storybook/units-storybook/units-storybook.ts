@@ -1,21 +1,17 @@
 import {Component, signal} from '@angular/core';
-import {Menu} from "../../../shared/components/menus/menu/menu";
-import {Button} from "../../../shared/components/buttons";
-import {NgOptimizedImage} from "@angular/common";
 import {MenuItem} from "../../../shared/components/menus/interfaces/menu-item";
+import {Units} from "../../../shared/components/menus/units/units";
 
 @Component({
     selector: 'app-menu-storybook',
     imports: [
-        Menu,
-        Button,
-        NgOptimizedImage
+        Units
     ],
-    templateUrl: './menu-storybook.html',
-    styleUrl: './menu-storybook.scss',
+    templateUrl: './units-storybook.html',
+    styleUrl: './units-storybook.scss',
     standalone: true
 })
-export class MenuStorybook {
+export class UnitsStorybook {
     menuItems = signal<MenuItem[]>([
         {
             label: 'Home',

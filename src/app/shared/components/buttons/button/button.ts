@@ -7,9 +7,10 @@ import { ButtonVariant, ButtonSize, ButtonType } from '../types';
   templateUrl: './button.html',
   styleUrls: ['./button.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   imports: [CommonModule]
 })
-export class ButtonComponent {
+export class Button {
   // Input properties
   type = input<ButtonType>('button');
   variant = input<ButtonVariant>('primary');

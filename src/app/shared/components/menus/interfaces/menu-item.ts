@@ -1,4 +1,7 @@
+import {MenuItemTypeEnum} from "../enums/menu-item-enum";
+
 export interface MenuItem {
     label?: string
-    items?: MenuItem[];
+    childItems?: Omit<MenuItem, 'childItems'>[];
+    MenuItemTypeEnum?: MenuItemTypeEnum;
 }
