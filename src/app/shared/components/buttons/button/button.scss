@@ -27,14 +27,14 @@
   }
 
   &--md {
-    padding: var(--spacing-3) var(--spacing-5);
+    padding: var(--spacing-2) var(--spacing-3);
 
     @include responsive.responsive_from('sm') {
-      padding: var(--spacing-3) var(--spacing-7);
+      padding: var(--spacing-1) var(--spacing-9);
     }
 
     @include responsive.responsive_from('md') {
-      padding: var(--spacing-4) var(--spacing-8);
+      padding: var(--spacing-2) var(--spacing-9);
     }
   }
 

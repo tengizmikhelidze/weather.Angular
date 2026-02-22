@@ -19,8 +19,9 @@ import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "..
     providers: [MenuOverlayService],
     template: `
         <app-button [variant]="buttonVariant()" (click)="menu.toggle($event)">
-            <img ngSrc="/assets/icons/icon-dropdown.svg" alt="<" height="8" width="13">
+            <img ngSrc="/assets/icons/icon-units.svg" alt="<" height="16" width="16">
             Units
+            <img ngSrc="/assets/icons/icon-dropdown.svg" alt="<" height="8" width="13">
         </app-button>
         <app-menu [popup]="true" #menu>
             <ng-template #menuItemTemplate>
