@@ -48,9 +48,9 @@ export class MenuOverlayService {
             .flexibleConnectedTo(triggerElement)
             .withPositions([
                 {
-                    originX: 'start',
+                    originX: 'end',
                     originY: 'bottom',
-                    overlayX: 'start',
+                    overlayX: 'end',
                     overlayY: 'top'
                 },
                 {
@@ -60,9 +60,9 @@ export class MenuOverlayService {
                     overlayY: 'bottom'
                 },
                 {
-                    originX: 'end',
+                    originX: 'start',
                     originY: 'bottom',
-                    overlayX: 'end',
+                    overlayX: 'start',
                     overlayY: 'top'
                 },
                 {
