@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
-import {MenuItem} from "../interfaces/menu-item";
+import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
 import {Button} from "../../buttons";
-import {NgClass, NgOptimizedImage} from "@angular/common";
+import {NgClass, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 
 @Component({
@@ -12,7 +12,8 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
         Menu,
         Button,
         NgOptimizedImage,
-        NgClass
+        NgClass,
+        NgTemplateOutlet
     ],
     providers: [MenuOverlayService],
     template: `
@@ -24,24 +25,27 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
             <ng-template #menuItemTemplate>
                 <div class="menu">
                     <div class="menu__content">
-                        @for (item of items; track item; let last = $last) {
-                            <div class="menu__item"
-                                 [ngClass]="{parent: item.childItems, button: item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON }">
-                                <p>{{ item.label }}</p>
-                                @if (item.childItems) {
-                                    @for (subItem of item.childItems; track subItem) {
-                                        <div class="menu__item menu__item__child">{{ subItem.label }}</div>
-                                    }
-                                }
-                            </div>
-                            @if (item.childItems && !last) {
+                        @for (item of items; track item; let isLast = $last) {
+                            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}" ></ng-container>
+                            @for (subItem of item.items; track subItem) {
+                                <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: subItem}" ></ng-container>
+                            }
+                            @if (item.items && !isLast) {
                                 <div class="splitter"></div>
                             }
                         }
                     </div>
                 </div>
             </ng-template>
+
         </app-menu>
+
+        <ng-template #itemTemplate let-item>
+            <button class="menu__item"
+                 [ngClass]="{parent: item.items, child: !item.items, button: item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON }">
+                <p>{{ item.label }}</p>
+            </button>
+        </ng-template>
     `,
     styleUrl: './units.scss',
 })
@@ -51,11 +55,12 @@ export class Units {
         {
             label: 'Switch To Imperial',
             MenuItemTypeEnum: MenuItemTypeEnum.BUTTON,
+            command: (event: MenuItemCommandEvent) => this.switchToImperial(event)
         },
         {
             label: 'Temperature',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
-            childItems: [
+            items: [
                 {
                     label: 'Celsius (°C)'
                 },
@@ -67,7 +72,7 @@ export class Units {
         {
             label: 'Wind Speed',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
-            childItems: [
+            items: [
                 {
                     label: 'km/h'
                 },
@@ -79,7 +84,7 @@ export class Units {
         {
             label: 'Precipitation',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
-            childItems: [
+            items: [
                 {
                     label: 'Millimeters (mm)'
                 },
@@ -89,4 +94,8 @@ export class Units {
             ]
         },
     ];
+
+    switchToImperial = (event: MenuItemCommandEvent) => {
+        console.log(event)
+    }
 }

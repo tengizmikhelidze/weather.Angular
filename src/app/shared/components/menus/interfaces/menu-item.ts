@@ -2,6 +2,13 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 
 export interface MenuItem {
     label?: string
-    childItems?: Omit<MenuItem, 'childItems'>[];
+    items?: Omit<MenuItem, 'items'>[];
     MenuItemTypeEnum?: MenuItemTypeEnum;
+    command?: (event: MenuItemCommandEvent) => void;
+}
+
+export interface MenuItemCommandEvent {
+    originalEvent?: Event;
+    item?: MenuItem;
+    index?: number;
 }
