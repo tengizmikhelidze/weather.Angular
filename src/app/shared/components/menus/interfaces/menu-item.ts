@@ -5,10 +5,9 @@ export interface MenuItem {
     items?: Omit<MenuItem, 'items'>[];
     MenuItemTypeEnum?: MenuItemTypeEnum;
     command?: (event: MenuItemCommandEvent) => void;
+    [propName: string]: unknown;
 }
 
 export interface MenuItemCommandEvent {
-    originalEvent?: Event;
     item?: MenuItem;
-    index?: number;
 }

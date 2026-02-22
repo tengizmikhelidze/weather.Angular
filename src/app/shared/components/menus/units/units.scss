@@ -10,12 +10,15 @@
   }
 
   &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+
     color: var(--color-text-secondary);
 
     &.parent {
       color: var(--color-text-tertiary);
-      display: flex;
-      flex-direction: column;
       gap: var(--spacing-2);
     }
 

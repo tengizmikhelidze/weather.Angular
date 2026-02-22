@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
 import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
 import {Button} from "../../buttons";
 import {NgClass, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
+import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "../enums/units-enums";
 
 @Component({
     selector: 'app-units',
@@ -26,9 +27,10 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
                 <div class="menu">
                     <div class="menu__content">
                         @for (item of items; track item; let isLast = $last) {
-                            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}" ></ng-container>
+                            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}"></ng-container>
                             @for (subItem of item.items; track subItem) {
-                                <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: subItem}" ></ng-container>
+                                <ng-container
+                                        *ngTemplateOutlet="itemTemplate; context: {$implicit: subItem}"></ng-container>
                             }
                             @if (item.items && !isLast) {
                                 <div class="splitter"></div>
@@ -41,9 +43,17 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
         </app-menu>
 
         <ng-template #itemTemplate let-item>
-            <button class="menu__item"
-                 [ngClass]="{parent: item.items, child: !item.items, button: item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON }">
+            <button class="menu__item" (click)="item.command ? item.command({item}) : null"
+                    [ngClass]="{
+                     parent: item.items,
+                     child: !item.items, 
+                     button: item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON,
+                     selected: item.controller ? item.controller() === item.value: false
+                     }">
                 <p>{{ item.label }}</p>
+                @if (item.controller && item.controller() === item.value) {
+                    <img ngSrc="/assets/icons/icon-checkmark.svg" alt="✓" height="12" width="12">
+                }
             </button>
         </ng-template>
     `,
@@ -51,33 +61,56 @@ import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 })
 export class Units {
     protected readonly MenuItemTypeEnum = MenuItemTypeEnum;
-    readonly items: MenuItem[] = [
+
+    temperature = signal<TemperatureUnitsEnums>(TemperatureUnitsEnums.CELSIUS)
+    wind = signal<WindUnitsEnums>(WindUnitsEnums.KMH)
+    precipitation = signal<PrecipitationUnitsEnums>(PrecipitationUnitsEnums.MM)
+
+    protected readonly items: MenuItem[] = [
         {
             label: 'Switch To Imperial',
             MenuItemTypeEnum: MenuItemTypeEnum.BUTTON,
             command: (event: MenuItemCommandEvent) => this.switchToImperial(event)
         },
         {
+            label: 'Switch To Metric',
+            MenuItemTypeEnum: MenuItemTypeEnum.BUTTON,
+            command: (event: MenuItemCommandEvent) => this.switchToMetric(event)
+        },
+        {
             label: 'Temperature',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
             items: [
                 {
-                    label: 'Celsius (°C)'
+                    label: 'Celsius (°C)',
+                    value: TemperatureUnitsEnums.CELSIUS,
+                    controller: this.temperature,
+                    command: (event: MenuItemCommandEvent) => this.selectTemperatureUnit(event.item)
                 },
                 {
-                    label: 'Fahrenheit (°F)'
+                    label: 'Fahrenheit (°F)',
+                    value: TemperatureUnitsEnums.FAHRENHEIT,
+                    controller: this.temperature,
+                    command: (event: MenuItemCommandEvent) => this.selectTemperatureUnit(event.item)
                 }
             ]
         },
         {
             label: 'Wind Speed',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
+            command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item),
             items: [
                 {
-                    label: 'km/h'
+                    label: 'km/h',
+                    value: WindUnitsEnums.KMH,
+                    controller: this.wind,
+                    command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item)
                 },
                 {
-                    label: 'mph'
+                    label: 'mph',
+                    value: WindUnitsEnums.MPH,
+                    controller: this.wind,
+                    command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item)
                 }
             ]
         },
@@ -86,16 +119,45 @@ export class Units {
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
             items: [
                 {
-                    label: 'Millimeters (mm)'
+                    label: 'Millimeters (mm)',
+                    value: PrecipitationUnitsEnums.MM,
+                    controller: this.precipitation,
+                    command: (event: MenuItemCommandEvent) => this.selectPrecipitationUnit(event.item)
                 },
                 {
-                    label: 'Inches (in)'
+                    label: 'Inches (in)',
+                    value: PrecipitationUnitsEnums.IN,
+                    controller: this.precipitation,
+                    command: (event: MenuItemCommandEvent) => this.selectPrecipitationUnit(event.item)
                 }
             ]
         },
     ];
 
     switchToImperial = (event: MenuItemCommandEvent) => {
-        console.log(event)
+        this.temperature.set(TemperatureUnitsEnums.FAHRENHEIT)
+        this.wind.set(WindUnitsEnums.MPH)
+        this.precipitation.set(PrecipitationUnitsEnums.IN)
+    }
+
+    switchToMetric = (event: MenuItemCommandEvent) => {
+        this.temperature.set(TemperatureUnitsEnums.CELSIUS)
+        this.wind.set(WindUnitsEnums.KMH)
+        this.precipitation.set(PrecipitationUnitsEnums.MM)
+    }
+
+    selectTemperatureUnit(menuItem: MenuItem | undefined) {
+        const value = menuItem ? menuItem["value"] as TemperatureUnitsEnums : TemperatureUnitsEnums.CELSIUS
+        this.temperature.set(value)
+    }
+
+    selectWindUnit(menuItem: MenuItem | undefined) {
+        const value = menuItem ? menuItem["value"] as WindUnitsEnums : WindUnitsEnums.KMH
+        this.wind.set(value)
+    }
+
+    selectPrecipitationUnit(menuItem: MenuItem | undefined) {
+        const value = menuItem ? menuItem["value"] as PrecipitationUnitsEnums : PrecipitationUnitsEnums.MM
+        this.precipitation.set(value)
     }
 }
