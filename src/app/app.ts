@@ -14,6 +14,8 @@ import {Header} from "./features/header/header";
     </div>
   `,
   styles: `
+    @use 'mixins/responsive.mixins' as responsive;
+    
     .app-container {
       min-height: 100vh;
       background-color: var(--color-background);
@@ -24,6 +26,15 @@ import {Header} from "./features/header/header";
     .app {
       &__header {
         width: 100%;
+        padding: var(--spacing-8) var(--spacing-16);
+
+        @include responsive.responsive_until('sm') {
+          padding: var(--spacing-1) var(--spacing-9);
+        }
+
+        @include responsive.responsive_until('xs') {
+          padding: var(--spacing-2) var(--spacing-2);
+        }
       }
     }
   `,

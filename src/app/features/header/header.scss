@@ -3,9 +3,12 @@
 header {
   height: 60px;
   width: 100%;
-  padding: var(--spacing-3);
   display: flex;
   justify-content: space-between;
+
+  @include responsive.responsive_until('sm') {
+    height: 40px;
+  }
 
   .column {
     height: 100%;

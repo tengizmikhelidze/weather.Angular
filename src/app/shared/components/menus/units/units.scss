@@ -1,3 +1,5 @@
+@use 'mixins/responsive.mixins' as responsive;
+
 .menu {
   background: var(--color-background-secondary);
   border-radius: var(--border-radius-sm);
@@ -15,11 +17,30 @@
     align-items: center;
     flex-direction: row;
 
+    // Mobile-first font size
+    font-size: var(--font-size-fluid-xs);
     color: var(--color-text-secondary);
+
+    @include responsive.responsive_from('sm') {
+      font-size: var(--font-size-fluid-sm);
+    }
+
+    @include responsive.responsive_from('md') {
+      font-size: var(--font-size-fluid-base);
+    }
+
+    p {
+      font-size: inherit;
+    }
 
     &.parent {
       color: var(--color-text-tertiary);
       gap: var(--spacing-2);
+      font-size: var(--font-size-fluid-xs);
+
+      @include responsive.responsive_from('sm') {
+        font-size: var(--font-size-fluid-sm);
+      }
     }
 
     &.button {

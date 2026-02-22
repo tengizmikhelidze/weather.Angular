@@ -3,7 +3,7 @@ import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
 import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
 import {Button, ButtonVariant} from "../../buttons";
-import {NgClass, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
+import {NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "../enums/units-enums";
 
@@ -13,7 +13,6 @@ import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "..
         Menu,
         Button,
         NgOptimizedImage,
-        NgClass,
         NgTemplateOutlet
     ],
     providers: [MenuOverlayService],
@@ -45,12 +44,10 @@ import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "..
 
         <ng-template #itemTemplate let-item>
             <button class="menu__item" (click)="item.command ? item.command({item}) : null"
-                    [ngClass]="{
-                     parent: item.items,
-                     child: !item.items, 
-                     button: item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON,
-                     selected: item.controller ? item.controller() === item.value: false
-                     }">
+                    [class.parent]="item.items"
+                    [class.child]="!item.items"
+                    [class.button]="item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON"
+                    [class.selected]="item.controller ? item.controller() === item.value : false">
                 <p>{{ item.label }}</p>
                 @if (item.controller && item.controller() === item.value) {
                     <img ngSrc="/assets/icons/icon-checkmark.svg" alt="✓" height="12" width="12">

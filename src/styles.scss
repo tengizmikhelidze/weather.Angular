@@ -27,4 +27,21 @@
   @each $name, $value in typo.$font-families {
     --font-family-#{$name}: #{$value};
   }
+
+  // Fluid (responsive) font sizes — mirrors $font-sizes in _typography.scss
+  // clamp(mobile-min, preferred-fluid, desktop-max)
+  // Static equivalents: --font-size-xs = 0.75rem, --font-size-sm = 0.875rem, etc.
+  --font-size-fluid-xs:   clamp(0.625rem,  0.563rem + 0.313vw, 0.75rem);    // 10px  → 12px  (static xs:   12px)
+  --font-size-fluid-sm:   clamp(0.75rem,   0.688rem + 0.313vw, 0.875rem);   // 12px  → 14px  (static sm:   14px)
+  --font-size-fluid-base: clamp(0.875rem,  0.813rem + 0.313vw, 1rem);       // 14px  → 16px  (static base: 16px)
+  --font-size-fluid-lg:   clamp(1rem,      0.938rem + 0.313vw, 1.125rem);   // 16px  → 18px  (static lg:   18px)
+  --font-size-fluid-xl:   clamp(1.125rem,  1rem     + 0.625vw, 1.25rem);    // 18px  → 20px  (static xl:   20px)
+  --font-size-fluid-2xl:  clamp(1.25rem,   1rem     + 1vw,     1.5rem);     // 20px  → 24px  (static 2xl:  24px)
+  --font-size-fluid-3xl:  clamp(1.5rem,    1.125rem + 1.5vw,   1.875rem);   // 24px  → 30px  (static 3xl:  30px)
+  --font-size-fluid-4xl:  clamp(1.75rem,   1.25rem  + 2vw,     2.25rem);    // 28px  → 36px  (static 4xl:  36px)
+  --font-size-fluid-5xl:  clamp(2rem,      1rem     + 3vw,     3rem);       // 32px  → 48px  (static 5xl:  48px)
+  --font-size-fluid-6xl:  clamp(2.5rem,    1rem     + 4vw,     3.75rem);    // 40px  → 60px  (static 6xl:  60px)
+  --font-size-fluid-7xl:  clamp(3rem,      1rem     + 5vw,     4.5rem);     // 48px  → 72px  (static 7xl:  72px)
+  --font-size-fluid-8xl:  clamp(3.5rem,    1rem     + 7vw,     6rem);       // 56px  → 96px  (static 8xl:  96px)
+  --font-size-fluid-9xl:  clamp(4rem,      1rem     + 9vw,     8rem);       // 64px  → 128px (static 9xl: 128px)
 }

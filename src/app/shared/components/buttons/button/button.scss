@@ -6,8 +6,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: var(--font-family-sans);
-  font-weight: 500;
+  font-family: var(--font-family-sans), sans-serif;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-fluid-sm);  // default, overridden by size variants
   text-align: center;
   text-decoration: none;
   border: 1px solid transparent;
@@ -19,17 +20,21 @@
 
   // Size variants - Mobile first
   &--sm {
+    font-size: var(--font-size-fluid-xs);   // 10px → 12px (mirrors --font-size-xs: 12px)
     padding: var(--spacing-2) var(--spacing-4);
 
     @include responsive.responsive_from('sm') {
+      font-size: var(--font-size-fluid-sm); // 12px → 14px (mirrors --font-size-sm: 14px)
       padding: var(--spacing-3) var(--spacing-5);
     }
   }
 
   &--md {
+    font-size: var(--font-size-fluid-sm);   // 12px → 14px
     padding: var(--spacing-2) var(--spacing-3);
 
     @include responsive.responsive_from('sm') {
+      font-size: var(--font-size-fluid-base); // 14px → 16px (mirrors --font-size-base: 16px)
       padding: var(--spacing-1) var(--spacing-9);
     }
 
@@ -39,13 +44,16 @@
   }
 
   &--lg {
+    font-size: var(--font-size-fluid-base); // 14px → 16px
     padding: var(--spacing-4) var(--spacing-8);
 
     @include responsive.responsive_from('sm') {
+      font-size: var(--font-size-fluid-lg); // 16px → 18px (mirrors --font-size-lg: 18px)
       padding: var(--spacing-5) var(--spacing-9);
     }
 
     @include responsive.responsive_from('md') {
+      font-size: var(--font-size-fluid-xl); // 18px → 20px (mirrors --font-size-xl: 20px)
       padding: var(--spacing-6) var(--spacing-10);
     }
   }
