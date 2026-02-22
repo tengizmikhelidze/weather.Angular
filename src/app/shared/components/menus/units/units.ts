@@ -1,8 +1,8 @@
-import {Component, signal} from '@angular/core';
+import {Component, input, signal} from '@angular/core';
 import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
 import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
-import {Button} from "../../buttons";
+import {Button, ButtonVariant} from "../../buttons";
 import {NgClass, NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "../enums/units-enums";
@@ -18,7 +18,7 @@ import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "..
     ],
     providers: [MenuOverlayService],
     template: `
-        <app-button (click)="menu.toggle($event)">
+        <app-button [variant]="buttonVariant()" (click)="menu.toggle($event)">
             <img ngSrc="/assets/icons/icon-dropdown.svg" alt="<" height="8" width="13">
             Units
         </app-button>
@@ -61,6 +61,8 @@ import {PrecipitationUnitsEnums, TemperatureUnitsEnums, WindUnitsEnums} from "..
 })
 export class Units {
     protected readonly MenuItemTypeEnum = MenuItemTypeEnum;
+
+    buttonVariant = input<ButtonVariant>('secondary')
 
     temperature = signal<TemperatureUnitsEnums>(TemperatureUnitsEnums.CELSIUS)
     wind = signal<WindUnitsEnums>(WindUnitsEnums.KMH)
