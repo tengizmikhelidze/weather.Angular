@@ -15,11 +15,9 @@ import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <main>
-            <app-current-weather-card></app-current-weather-card>
             @defer {
+                <app-current-weather-card></app-current-weather-card>
                 <app-hourly-forecast-card></app-hourly-forecast-card>
-            }
-            @defer {
                 <app-daily-forecast-card></app-daily-forecast-card>
             }
         </main>
