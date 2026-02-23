@@ -3,12 +3,8 @@ import { Routes } from '@angular/router';
 export const featuresRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
     pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    loadComponent: () => import('./home/home').then(m => m.Home),
+    loadComponent: () => import('./weather/weather').then(m => m.Weather),
   },
   {
     path: 'theme',

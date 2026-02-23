@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {MenuItem} from "../../../shared/components/menus/interfaces/menu-item";
 import {Units} from "../../../shared/components/menus/units/units";
 
@@ -7,6 +7,7 @@ import {Units} from "../../../shared/components/menus/units/units";
     imports: [
         Units
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './units-storybook.html',
     styleUrl: './units-storybook.scss',
     standalone: true
