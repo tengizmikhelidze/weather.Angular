@@ -10,7 +10,9 @@ import {Header} from "./features/header/header";
       <div class="app__header">
         <app-header></app-header>
       </div>
-      <router-outlet />
+      <main class="app__main">
+        <router-outlet />
+      </main>
     </div>
   `,
   styles: `
@@ -24,7 +26,7 @@ import {Header} from "./features/header/header";
     }
     
     .app {
-      &__header {
+      &__header, &__main {
         width: 100%;
         padding: var(--spacing-8) var(--spacing-16);
 
