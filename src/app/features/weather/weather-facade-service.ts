@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {OpenMeteoService} from "../../shared/services/open-meteo-service";
 import {toSignal} from "@angular/core/rxjs-interop";
 
@@ -7,8 +7,17 @@ export class WeatherFacadeService {
   readonly openMeteoService = inject(OpenMeteoService);
   readonly weatherData = toSignal(this.openMeteoService.weatherState)
 
+  loading = signal<boolean>(false);
+
   constructor() {
+    this.loading.set(true);
+
     this.openMeteoService.getWeather()
-        .subscribe()
+        .subscribe(
+            {
+              next: () => this.loading.set(false),
+              error: () => this.loading.set(false)
+            }
+        )
   }
 }
