@@ -5,7 +5,8 @@ export enum TemperatureUnitsEnums {
 
 export enum WindUnitsEnums {
     KMH = 'kmh',
-    MPH = 'mph'
+    MPH = 'mph',
+    KN = 'kn'
 }
 
 export enum PrecipitationUnitsEnums {

@@ -27,6 +27,6 @@ export class CurrentWeatherCard {
   protected readonly weatherFacadeService = inject(WeatherFacadeService);
 
   constructor() {
-    console.log(this.weatherFacadeService.weatherData())
+    this.weatherFacadeService.weatherData.subscribe({next: value => console.log(value)});
   }
 }

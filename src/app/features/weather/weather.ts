@@ -31,7 +31,6 @@ export class Weather {
     protected readonly weatherFacadeService = inject(WeatherFacadeService);
 
     constructor() {
-        console.log(this.weatherFacadeService.weatherData())
     }
 
 }
