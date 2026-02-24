@@ -28,6 +28,9 @@ export interface CurrentForecast {
     [ForecastVariablesEnum.weather_code]?: null | number
     [ForecastVariablesEnum.time]:  Date | null
     [ForecastVariablesEnum.apparent_temperature]?: null | number
+    [ForecastVariablesEnum.wind_speed_10m]?: null | number
+    [ForecastVariablesEnum.relative_humidity_2m]?: null | number
+    [ForecastVariablesEnum.precipitation]?: null | number
 }
 
 export interface ForecastParams {

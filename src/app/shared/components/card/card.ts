@@ -17,6 +17,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
         position: relative;
         display: block;
         padding: var(--spacing-8);
+        border: 2px solid var(--color-borde-tertiary);
         border-radius: var(--border-radius-sm);
         background: var(--color-background-secondary);
         overflow: hidden;

@@ -23,6 +23,11 @@ import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
     `,
     styles: [
         `
+            main {
+              display: grid;
+              grid-template-columns: 1fr;
+              grid-gap: var(--spacing-6);
+            }
         `
     ],
 })

@@ -43,7 +43,14 @@ export class OpenMeteoService {
             longitude: locationPosition.coords.longitude,
             daily: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m_mean],
             hourly: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m],
-            current: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m, ForecastVariablesEnum.apparent_temperature],
+            current: [
+                ForecastVariablesEnum.weather_code,
+                ForecastVariablesEnum.temperature_2m,
+                ForecastVariablesEnum.apparent_temperature,
+                ForecastVariablesEnum.wind_speed_10m,
+                ForecastVariablesEnum.relative_humidity_2m,
+                ForecastVariablesEnum.precipitation,
+            ],
             temperature_unit,
             wind_speed_unit,
             precipitation_unit,
@@ -83,7 +90,10 @@ export class OpenMeteoService {
             [ForecastVariablesEnum.temperature_2m]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.temperature_2m),
             [ForecastVariablesEnum.weather_code]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.weather_code),
             [ForecastVariablesEnum.time]: this.getTimeSingle(weatherApi, utcOffsetSeconds),
-            [ForecastVariablesEnum.apparent_temperature]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.apparent_temperature)
+            [ForecastVariablesEnum.apparent_temperature]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.apparent_temperature),
+            [ForecastVariablesEnum.relative_humidity_2m]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.relative_humidity_2m),
+            [ForecastVariablesEnum.wind_speed_10m]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.wind_speed_10m),
+            [ForecastVariablesEnum.precipitation]: this.getVariableValue(weatherApi, params, 'current', ForecastVariablesEnum.precipitation)
         }
     }
 

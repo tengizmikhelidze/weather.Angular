@@ -31,11 +31,11 @@ import {Header} from "./features/header/header";
         padding: var(--spacing-8) var(--spacing-16);
 
         @include responsive.responsive_until('sm') {
-          padding: var(--spacing-1) var(--spacing-9);
+          padding: var(--spacing-2) var(--spacing-8);
         }
 
         @include responsive.responsive_until('xs') {
-          padding: var(--spacing-2) var(--spacing-2);
+          padding: var(--spacing-4) var(--spacing-4);
         }
       }
     }
