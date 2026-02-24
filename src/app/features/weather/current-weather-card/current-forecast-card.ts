@@ -1,11 +1,13 @@
-import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {Card} from "../../../shared/components/card/card";
 import {OpenMeteoService} from "../../../core/services/open-meteo-service";
+import {GeolocationService} from "../../../core/services/geolocation-service";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-current-weather-card',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [Card],
+    imports: [Card, DatePipe],
     template: `
         <app-card [noPadding]="true" borderRadius="var(--border-radius-2xl)">
             <picture class="weather-bg">
@@ -20,16 +22,27 @@ import {OpenMeteoService} from "../../../core/services/open-meteo-service";
                 />
             </picture>
             <div class="content">
-                <div id="geolocation">Tbilisi, Georgia</div>
+                <div class="content__box">
+                    <div id="geolocation">
+                        {{ geolocationService.ipLocation().city }}
+                        , {{ geolocationService.ipLocation().country }}
+                    </div>
+
+                    <div id="date">
+                        {{currentDate() | date: 'EEEE, MMM d, yyyy'}}
+                    </div>
+                </div>
+                
                 <div id="temperature">{{ currentWeatherData()?.temperature_2m }}&deg;</div>
             </div>
         </app-card>
     `,
-    styleUrl: './current-weather-card.scss',
+    styleUrl: './current-forecast-card.scss',
 })
-export class CurrentWeatherCard {
+export class CurrentForecastCard {
+    protected readonly geolocationService = inject(GeolocationService)
     protected readonly openMeteoService = inject(OpenMeteoService);
 
     currentWeatherData = computed(() => this.openMeteoService.weatherState()?.current);
-
+    currentDate = signal(new Date())
 }

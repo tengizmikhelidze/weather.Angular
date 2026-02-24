@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CurrentWeatherCard} from "./current-weather-card/current-weather-card";
+import {CurrentForecastCard} from "./current-weather-card/current-forecast-card";
 import {HourlyForecastCard} from "./hourly-forecast-card/hourly-forecast-card";
 import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
 
 @Component({
     selector: 'app-weather',
     imports: [
-        CurrentWeatherCard,
+        CurrentForecastCard,
         HourlyForecastCard,
         DailyForecastCard
     ],

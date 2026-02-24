@@ -20,19 +20,36 @@
 .content {
   height: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-8);
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+  }
+}
+
+#geolocation, #temperature, #date {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-fluid-3xl);
+  z-index: 1;
+  text-align: center;
 }
 
 #geolocation {
-  font-size: var(--font-size-fluid-3xl);
-  z-index: 1;
+  font-weight: 500;
 }
 
 #temperature {
   font-size: var(--font-size-fluid-7xl);
-  z-index: 1;
-  font-family: var(--font-family-heading);
   font-style: italic;
+}
+
+#date {
+  font-size: var(--font-size-fluid-lg);
+  color: var(--color-text-tertiary);
 }
