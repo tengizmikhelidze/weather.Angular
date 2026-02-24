@@ -2,11 +2,37 @@
   display: block;
   width: 100%;
   height: 100%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-.weather-bg__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.content {
+  height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-8);
+}
+
+#geolocation {
+  font-size: var(--font-size-fluid-3xl);
+  z-index: 1;
+}
+
+#temperature {
+  font-size: var(--font-size-fluid-7xl);
+  z-index: 1;
+  font-family: var(--font-family-heading);
+  font-style: italic;
 }

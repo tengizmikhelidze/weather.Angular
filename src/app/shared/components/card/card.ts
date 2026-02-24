@@ -14,6 +14,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
     `,
     styles: [`
       .card {
+        position: relative;
         display: block;
         padding: var(--spacing-8);
         border-radius: var(--border-radius-sm);

@@ -19,7 +19,10 @@ import {WeatherFacadeService} from "../weather-facade-service";
             aria-hidden="true"
         />
       </picture>
-      <div class="temperature">{{ currentWeatherData()?.temperature_2m }}</div>
+      <div class="content">
+        <div id="geolocation">Tbilisi, Georgia</div>
+        <div id="temperature">{{ currentWeatherData()?.temperature_2m }}&deg;</div>
+      </div>
     </app-card>
   `,
   styleUrl: './current-weather-card.scss',
