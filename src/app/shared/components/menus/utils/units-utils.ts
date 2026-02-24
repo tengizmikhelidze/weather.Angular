@@ -8,7 +8,7 @@ export const defaultState: UnitsState = {
     precipitation: PrecipitationUnitsEnums.MM,
 };
 
-export function loadFromStorage(): UnitsState {
+export function loadUnitsFromStorage(): UnitsState {
     try {
         const raw = localStorage.getItem(UNITS_STORAGE_KEY);
         return raw ? {...defaultState, ...JSON.parse(raw)} : defaultState;

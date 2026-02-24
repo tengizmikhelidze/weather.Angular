@@ -1,4 +1,4 @@
-import {Component, effect, input, signal} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {Menu} from "../menu/menu";
 import {MenuOverlayService} from "../menu/menu-overlay-service";
 import {MenuItem, MenuItemCommandEvent} from "../interfaces/menu-item";
@@ -6,7 +6,8 @@ import {Button, ButtonVariant} from "../../buttons";
 import {NgOptimizedImage, NgTemplateOutlet} from "@angular/common";
 import {MenuItemTypeEnum} from "../enums/menu-item-enum";
 import {PrecipitationUnitsEnums, TemperatureUnitsEnums, UnitsState, WindUnitsEnums} from "../enums/units-enums";
-import {loadFromStorage, UNITS_STORAGE_KEY} from "../utils/units-utils";
+import {UNITS_STORAGE_KEY} from "../utils/units-utils";
+import {UnitsService} from "./units-service";
 
 @Component({
     selector: 'app-units',
@@ -18,7 +19,7 @@ import {loadFromStorage, UNITS_STORAGE_KEY} from "../utils/units-utils";
     ],
     providers: [MenuOverlayService],
     template: `
-        <app-button [variant]="buttonVariant()" (click)="menu.toggle($event)">
+        <app-button [variant]="buttonVariant()" (click)="menu.showOverlay($event)">
             <img ngSrc="/assets/icons/icon-units.svg" alt="<" height="16" width="16">
             Units
             <img ngSrc="/assets/icons/icon-dropdown.svg" alt="<" height="8" width="13">
@@ -50,8 +51,8 @@ import {loadFromStorage, UNITS_STORAGE_KEY} from "../utils/units-utils";
                     [class.button]="item.MenuItemTypeEnum === MenuItemTypeEnum.BUTTON"
                     [class.selected]="item.controller ? item.controller() === item.value : false">
                 <p>{{ item.label }}</p>
-                @if (item.controller && item.controller() === item.value) {
-                    <img ngSrc="/assets/icons/icon-checkmark.svg" alt="✓" height="12" width="12">
+                @if (item.controller && !item.items && item.controller() === item.value) {
+                    <img ngSrc="/assets/icons/icon-checkmark.svg" alt="✓" height="11" width="14">
                 }
             </button>
         </ng-template>
@@ -60,12 +61,9 @@ import {loadFromStorage, UNITS_STORAGE_KEY} from "../utils/units-utils";
 })
 export class Units {
     protected readonly MenuItemTypeEnum = MenuItemTypeEnum;
+    private readonly unitsService = inject(UnitsService)
 
     buttonVariant = input<ButtonVariant>('secondary')
-
-    temperature = signal<TemperatureUnitsEnums>(loadFromStorage().temperature)
-    wind = signal<WindUnitsEnums>(loadFromStorage().wind)
-    precipitation = signal<PrecipitationUnitsEnums>(loadFromStorage().precipitation)
 
     protected readonly items: MenuItem[] = [
         {
@@ -81,17 +79,20 @@ export class Units {
         {
             label: 'Temperature',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
+            controller: this.unitsService.temperature_unit,
+            value: TemperatureUnitsEnums.CELSIUS,
+            command: (event: MenuItemCommandEvent) => this.selectTemperatureUnit(event.item),
             items: [
                 {
                     label: 'Celsius (°C)',
                     value: TemperatureUnitsEnums.CELSIUS,
-                    controller: this.temperature,
+                    controller: this.unitsService.temperature_unit,
                     command: (event: MenuItemCommandEvent) => this.selectTemperatureUnit(event.item)
                 },
                 {
                     label: 'Fahrenheit (°F)',
                     value: TemperatureUnitsEnums.FAHRENHEIT,
-                    controller: this.temperature,
+                    controller: this.unitsService.temperature_unit,
                     command: (event: MenuItemCommandEvent) => this.selectTemperatureUnit(event.item)
                 }
             ]
@@ -99,18 +100,20 @@ export class Units {
         {
             label: 'Wind Speed',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
+            controller: this.unitsService.wind_speed_unit,
+            value: WindUnitsEnums.KMH,
             command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item),
             items: [
                 {
                     label: 'km/h',
                     value: WindUnitsEnums.KMH,
-                    controller: this.wind,
+                    controller: this.unitsService.wind_speed_unit,
                     command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item)
                 },
                 {
                     label: 'mph',
                     value: WindUnitsEnums.MPH,
-                    controller: this.wind,
+                    controller: this.unitsService.wind_speed_unit,
                     command: (event: MenuItemCommandEvent) => this.selectWindUnit(event.item)
                 }
             ]
@@ -118,17 +121,20 @@ export class Units {
         {
             label: 'Precipitation',
             MenuItemTypeEnum: MenuItemTypeEnum.TOGGLE,
+            value: PrecipitationUnitsEnums.MM,
+            controller: this.unitsService.precipitation_unit,
+            command: (event: MenuItemCommandEvent) => this.selectPrecipitationUnit(event.item),
             items: [
                 {
                     label: 'Millimeters (mm)',
                     value: PrecipitationUnitsEnums.MM,
-                    controller: this.precipitation,
+                    controller: this.unitsService.precipitation_unit,
                     command: (event: MenuItemCommandEvent) => this.selectPrecipitationUnit(event.item)
                 },
                 {
                     label: 'Inches (in)',
                     value: PrecipitationUnitsEnums.IN,
-                    controller: this.precipitation,
+                    controller: this.unitsService.precipitation_unit,
                     command: (event: MenuItemCommandEvent) => this.selectPrecipitationUnit(event.item)
                 }
             ]
@@ -138,38 +144,38 @@ export class Units {
     constructor() {
         effect(() => {
             const state: UnitsState = {
-                temperature: this.temperature(),
-                wind: this.wind(),
-                precipitation: this.precipitation(),
+                temperature: this.unitsService.temperature_unit(),
+                wind: this.unitsService.wind_speed_unit(),
+                precipitation: this.unitsService.precipitation_unit(),
             };
             localStorage.setItem(UNITS_STORAGE_KEY, JSON.stringify(state));
         });
     }
 
     switchToImperial = (event: MenuItemCommandEvent) => {
-        this.temperature.set(TemperatureUnitsEnums.FAHRENHEIT)
-        this.wind.set(WindUnitsEnums.MPH)
-        this.precipitation.set(PrecipitationUnitsEnums.IN)
+        this.unitsService.setTemperatureUnit(TemperatureUnitsEnums.FAHRENHEIT)
+        this.unitsService.setWindSpeedUnit(WindUnitsEnums.MPH)
+        this.unitsService.setPrecipitationUnit(PrecipitationUnitsEnums.IN)
     }
 
     switchToMetric = (event: MenuItemCommandEvent) => {
-        this.temperature.set(TemperatureUnitsEnums.CELSIUS)
-        this.wind.set(WindUnitsEnums.KMH)
-        this.precipitation.set(PrecipitationUnitsEnums.MM)
+        this.unitsService.setTemperatureUnit(TemperatureUnitsEnums.CELSIUS)
+        this.unitsService.setWindSpeedUnit(WindUnitsEnums.KMH)
+        this.unitsService.setPrecipitationUnit(PrecipitationUnitsEnums.MM)
     }
 
     selectTemperatureUnit(menuItem: MenuItem | undefined) {
         const value = menuItem ? menuItem["value"] as TemperatureUnitsEnums : TemperatureUnitsEnums.CELSIUS
-        this.temperature.set(value)
+        this.unitsService.setTemperatureUnit(value)
     }
 
     selectWindUnit(menuItem: MenuItem | undefined) {
         const value = menuItem ? menuItem["value"] as WindUnitsEnums : WindUnitsEnums.KMH
-        this.wind.set(value)
+        this.unitsService.setWindSpeedUnit(value)
     }
 
     selectPrecipitationUnit(menuItem: MenuItem | undefined) {
         const value = menuItem ? menuItem["value"] as PrecipitationUnitsEnums : PrecipitationUnitsEnums.MM
-        this.precipitation.set(value)
+        this.unitsService.setPrecipitationUnit(value)
     }
 }

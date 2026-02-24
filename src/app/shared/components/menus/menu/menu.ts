@@ -50,25 +50,8 @@ export class Menu implements OnInit {
         if (!this.popup()) this.show.set(true)
     }
 
-    toggle(event?: Event): void {
-        const popup = this.popup();
-        const show = this.show();
-
-        if (popup) {
-            if (event) {
-                show ? this.hideOverlay() : this.showOverlay(event);
-            }
-            return;
-        } else this.show.update(v => !v);
-    }
-
-    private showOverlay(event: Event) {
+    showOverlay(event: Event) {
         this.menuOverlayService.showOverlay(event, this.activeTemplate());
         this.show.set(true);
-    }
-
-    private hideOverlay() {
-        this.menuOverlayService.hideOverlay()
-        this.show.set(false);
     }
 }

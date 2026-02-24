@@ -6,12 +6,13 @@ export enum TemperatureUnitsEnums {
 export enum WindUnitsEnums {
     KMH = 'kmh',
     MPH = 'mph',
-    KN = 'kn'
+    KN = 'kn',
+    MS = 'ms'
 }
 
 export enum PrecipitationUnitsEnums {
     MM = 'mm',
-    IN = 'in'
+    IN = 'inch'
 }
 
 export interface UnitsState {

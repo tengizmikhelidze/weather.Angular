@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {WeatherFacadeService} from "./weather-facade-service";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CurrentWeatherCard} from "./current-weather-card/current-weather-card";
 import {HourlyForecastCard} from "./hourly-forecast-card/hourly-forecast-card";
 import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
@@ -11,7 +10,7 @@ import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
         HourlyForecastCard,
         DailyForecastCard
     ],
-    providers: [WeatherFacadeService],
+    providers: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <main>
@@ -28,10 +27,5 @@ import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
     ],
 })
 export class Weather {
-    protected readonly weatherFacadeService = inject(WeatherFacadeService);
-
-    constructor() {
-
-    }
 
 }

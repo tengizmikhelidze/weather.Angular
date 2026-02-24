@@ -1,4 +1,4 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, effect, inject, Injectable, signal} from '@angular/core';
 import {fetchWeatherApi} from "openmeteo";
 import {from, map, Observable, shareReplay, tap} from "rxjs";
 import {WeatherApiResponse} from "@openmeteo/sdk/weather-api-response";
@@ -11,31 +11,38 @@ import {
     WeatherForecast
 } from "../interfaces/forecast-interface";
 import {VariablesWithTime} from "@openmeteo/sdk/variables-with-time";
-import {
-    PrecipitationUnitsEnums,
-    TemperatureUnitsEnums,
-    WindUnitsEnums
-} from "../../shared/components/menus/enums/units-enums";
 import {ForecastVariablesEnum} from "../enums/forecast-variables-enums";
 import {MathUtils} from "../utils/math-utils";
+import {UnitsService} from "../../shared/components/menus/units/units-service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class OpenMeteoService {
+    private readonly unitsService = inject(UnitsService);
     #weatherState = signal<WeatherForecast | undefined>(undefined);
     readonly weatherState = computed(() => this.#weatherState());
 
+    constructor() {
+        effect(() => {
+            this.getWeather().subscribe();
+        });
+    }
+
     getWeather(): Observable<WeatherForecast> {
+        const temperature_unit = this.unitsService.temperature_unit();
+        const wind_speed_unit = this.unitsService.wind_speed_unit();
+        const precipitation_unit = this.unitsService.precipitation_unit();
+
         const params: ForecastParams = {
             latitude: 41.799222,
             longitude: 44.824206,
             daily: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m_mean],
             hourly: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m],
             current: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m, ForecastVariablesEnum.apparent_temperature],
-            temperature_unit: TemperatureUnitsEnums.CELSIUS,
-            wind_speed_unit: WindUnitsEnums.KMH,
-            precipitation_unit: PrecipitationUnitsEnums.MM,
+            temperature_unit,
+            wind_speed_unit,
+            precipitation_unit,
         };
         const url = "https://api.open-meteo.com/v1/forecast";
 
