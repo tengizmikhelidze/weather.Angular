@@ -14,10 +14,10 @@ import {TemperaturePipe} from "../../../../shared/pipes/temperature-pipe";
     <div class="current-weather-data-cards">
       <app-card>
         <div class="card__content">
-          <div id="card__title">
+          <div class="card__title">
             Feels Like
           </div>
-          <div id="card__value">
+          <div class="card__value">
             {{openMeteoService.weatherState()?.current?.apparent_temperature}}
             {{unitsService.temperature_unit() | temperature}}
           </div>
@@ -26,10 +26,10 @@ import {TemperaturePipe} from "../../../../shared/pipes/temperature-pipe";
 
       <app-card>
         <div class="card__content">
-          <div id="card__title">
+          <div class="card__title">
             Humidity
           </div>
-          <div id="card__value">
+          <div class="card__value">
             {{openMeteoService.weatherState()?.current?.relative_humidity_2m}} %
           </div>
         </div>
@@ -37,10 +37,10 @@ import {TemperaturePipe} from "../../../../shared/pipes/temperature-pipe";
 
       <app-card>
         <div class="card__content">
-          <div id="card__title">
+          <div class="card__title">
             Wind
           </div>
-          <div id="card__value">
+          <div class="card__value">
             {{openMeteoService.weatherState()?.current?.wind_speed_10m}}
             {{unitsService.wind_speed_unit()}}
           </div>
@@ -49,10 +49,10 @@ import {TemperaturePipe} from "../../../../shared/pipes/temperature-pipe";
 
       <app-card>
         <div class="card__content">
-          <div id="card__title">
+          <div class="card__title">
             Precipitation
           </div>
-          <div id="card__value">
+          <div class="card__value">
             {{openMeteoService.weatherState()?.current?.precipitation ?? 0}}
             {{unitsService.precipitation_unit()}}
           </div>
@@ -60,13 +60,7 @@ import {TemperaturePipe} from "../../../../shared/pipes/temperature-pipe";
       </app-card>
     </div>
   `,
-  styles: `
-    .current-weather-data-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: var(--spacing-4);
-    }
-  `,
+  styleUrl: './current-weather-data-cards.scss',
 })
 export class CurrentWeatherDataCards {
   protected readonly unitsService = inject(UnitsService);

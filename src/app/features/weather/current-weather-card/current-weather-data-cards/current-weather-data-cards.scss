@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.current-weather-data-cards {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: var(--spacing-4);
+}
+
+.card {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  };
+
+  &__title {
+    color: var(--color-text-tertiary);
+  }
+
+  &__value {
+    font-size: var(--font-size-fluid-3xl);
+  }
+}

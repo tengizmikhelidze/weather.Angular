@@ -13,10 +13,15 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
         </section>
     `,
     styles: [`
+      :host {
+        display: block;
+        width: 100%;
+      }
+
       .card {
         position: relative;
         display: block;
-        padding: var(--spacing-8);
+        padding: var(--spacing-4);
         border: 2px solid var(--color-borde-tertiary);
         border-radius: var(--border-radius-sm);
         background: var(--color-background-secondary);
