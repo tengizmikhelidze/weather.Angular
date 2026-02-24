@@ -14,6 +14,8 @@ export interface WeatherForecast {
 export interface DailyForecast {
     [ForecastVariablesEnum.weather_code]?: number[] | null
     [ForecastVariablesEnum.temperature_2m_mean]?: number[] | null
+    [ForecastVariablesEnum.temperature_2m_min]?: number[] | null
+    [ForecastVariablesEnum.temperature_2m_max]?: number[] | null
     [ForecastVariablesEnum.time]: Date[]  | null
 }
 
@@ -36,6 +38,7 @@ export interface CurrentForecast {
 export interface ForecastParams {
     latitude: number
     longitude: number
+    timezone: string
     daily: ForecastVariablesEnum[]
     hourly: ForecastVariablesEnum[]
     current: ForecastVariablesEnum[]

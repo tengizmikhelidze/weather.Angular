@@ -16,8 +16,8 @@ import {DailyForecastCard} from "./daily-forecast-card/daily-forecast-card";
         <main>
             @defer {
                 <app-current-weather-card></app-current-weather-card>
-                <app-hourly-forecast-card></app-hourly-forecast-card>
                 <app-daily-forecast-card></app-daily-forecast-card>
+                <app-hourly-forecast-card></app-hourly-forecast-card>
             }
         </main>
     `,

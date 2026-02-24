@@ -7,6 +7,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
     template: `
         <section class="card"
                  [class.card--no-padding]="noPadding()"
+                 [style.padding]="padding()"
                  [style.border-radius]="borderRadius()"
                  role="group" aria-label="card">
             <ng-content></ng-content>
@@ -36,5 +37,6 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 })
 export class Card {
     noPadding = input(false);
-    borderRadius = input<string>('--border-radius-sm');
+    borderRadius = input<string>('var(--border-radius-sm)');
+    padding = input<string>('var(--spacing-4)');
 }

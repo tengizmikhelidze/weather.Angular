@@ -7,4 +7,6 @@ export enum ForecastVariablesEnum {
     precipitation = 'precipitation',
     wind_speed_10m = 'wind_speed_10m',
     relative_humidity_2m = 'relative_humidity_2m',
+    temperature_2m_max = 'temperature_2m_max',
+    temperature_2m_min = 'temperature_2m_min',
 }
