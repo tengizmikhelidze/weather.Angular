@@ -1,11 +1,11 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {OpenMeteoService} from "../../core/services/open-meteo-service";
 
 @Injectable()
 export class WeatherFacadeService {
     readonly openMeteoService = inject(OpenMeteoService);
-    readonly weatherData = this.openMeteoService.weatherState
+    readonly weatherData = computed(()=> this.openMeteoService.weatherState())
 
     loading = signal(true);
 

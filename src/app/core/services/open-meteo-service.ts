@@ -17,6 +17,7 @@ import {
     WindUnitsEnums
 } from "../../shared/components/menus/enums/units-enums";
 import {ForecastVariablesEnum} from "../enums/forecast-variables-enums";
+import {MathUtils} from "../utils/math-utils";
 
 @Injectable({
     providedIn: 'root',
@@ -89,16 +90,23 @@ export class OpenMeteoService {
 
         const variables = weatherApi?.variables(index)
 
-        return variables?.value() ?? null;
+        return variables?.value() ? MathUtils.roundToNearestInteger(variables.value()) : null;
     }
 
-    getVariableValueArray(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): Float32Array | null {
+    getVariableValueArray(
+        weatherApi: VariablesWithTime | null,
+        params: ForecastParams,
+        paramKey: ForecastParamsArrayKeys,
+        variable: ForecastVariablesEnum
+    ): number[] {
         const index = this.getVariableIndex(params, paramKey, variable);
-        if (index === -1) return null;
+        if (index === -1) return [];
 
-        const variables = weatherApi?.variables(index)
+        const values = weatherApi?.variables(index)?.valuesArray();
+        if (!values) return [];
 
-        return variables?.valuesArray() ?? null;
+        const toNumbers = Array.from(values, value => Number(value));
+        return MathUtils.roundArray(toNumbers);
     }
 
     getVariableIndex(params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number {

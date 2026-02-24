@@ -12,14 +12,14 @@ export interface WeatherForecast {
 }
 
 export interface DailyForecast {
-    [ForecastVariablesEnum.weather_code]?: Float32Array | null | number
-    [ForecastVariablesEnum.temperature_2m_mean]?: Float32Array | null | number
+    [ForecastVariablesEnum.weather_code]?: number[] | null
+    [ForecastVariablesEnum.temperature_2m_mean]?: number[] | null
     [ForecastVariablesEnum.time]: Date[]  | null
 }
 
 export interface HourlyForecast {
-    [ForecastVariablesEnum.temperature_2m]?: Float32Array | null | number,
-    [ForecastVariablesEnum.weather_code]?: Float32Array | null | number
+    [ForecastVariablesEnum.temperature_2m]?:   null | number[],
+    [ForecastVariablesEnum.weather_code]?:  null | number[]
     [ForecastVariablesEnum.time]: Date[]  | null
 }
 

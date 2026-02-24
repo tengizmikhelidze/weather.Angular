@@ -31,6 +31,7 @@ export class Weather {
     protected readonly weatherFacadeService = inject(WeatherFacadeService);
 
     constructor() {
+
     }
 
 }
