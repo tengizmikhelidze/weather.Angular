@@ -1,5 +1,5 @@
 <app-menu [popup]="true" #menu [menuItems]="menuItems()"></app-menu>
-<app-button (click)="menu.toggle($event)">
+<app-button (click)="menu.showOverlay($event)">
     <img ngSrc="/assets/icons/icon-dropdown.svg" alt="<" height="8" width="13">
     Toggle Menu
 </app-button>

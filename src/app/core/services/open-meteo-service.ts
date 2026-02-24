@@ -14,12 +14,15 @@ import {VariablesWithTime} from "@openmeteo/sdk/variables-with-time";
 import {ForecastVariablesEnum} from "../enums/forecast-variables-enums";
 import {MathUtils} from "../utils/math-utils";
 import {UnitsService} from "../../shared/components/menus/units/units-service";
+import {GeolocationService} from "./geolocation-service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class OpenMeteoService {
     private readonly unitsService = inject(UnitsService);
+    private readonly geolocationService = inject(GeolocationService);
+
     #weatherState = signal<WeatherForecast | undefined>(undefined);
     readonly weatherState = computed(() => this.#weatherState());
 
@@ -33,10 +36,11 @@ export class OpenMeteoService {
         const temperature_unit = this.unitsService.temperature_unit();
         const wind_speed_unit = this.unitsService.wind_speed_unit();
         const precipitation_unit = this.unitsService.precipitation_unit();
+        const locationPosition: GeolocationPosition | null = this.geolocationService.geolocationPosition();
 
         const params: ForecastParams = {
-            latitude: 41.799222,
-            longitude: 44.824206,
+            latitude: locationPosition.coords.latitude,
+            longitude: locationPosition.coords.longitude,
             daily: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m_mean],
             hourly: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m],
             current: [ForecastVariablesEnum.weather_code, ForecastVariablesEnum.temperature_2m, ForecastVariablesEnum.apparent_temperature],
