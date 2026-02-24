@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import {fetchWeatherApi} from "openmeteo";
-import {BehaviorSubject, from, map, Observable, shareReplay, tap} from "rxjs";
+import {from, map, Observable, shareReplay, tap} from "rxjs";
 import {WeatherApiResponse} from "@openmeteo/sdk/weather-api-response";
 import {
     CurrentForecast,
     DailyForecast,
     ForecastParams,
+    ForecastParamsArrayKeys,
     HourlyForecast,
     WeatherForecast
 } from "../interfaces/forecast-interface";
@@ -21,8 +22,8 @@ import {ForecastVariablesEnum} from "../enums/forecast-variables-enums";
     providedIn: 'root',
 })
 export class OpenMeteoService {
-    #weatherState = new BehaviorSubject<WeatherForecast | undefined>(undefined);
-    weatherState = this.#weatherState.asObservable().pipe(shareReplay(1));
+    #weatherState = signal<WeatherForecast | undefined>(undefined);
+    readonly weatherState = computed(() => this.#weatherState());
 
     getWeather(): Observable<WeatherForecast> {
         const params: ForecastParams = {
@@ -42,7 +43,7 @@ export class OpenMeteoService {
                 shareReplay({bufferSize: 1, refCount: true}),
                 map(data => this.transformWeatherApiToForecast(data[0], params)),
                 tap(transformedData => {
-                    this.#weatherState.next(transformedData)
+                    this.#weatherState.set(transformedData)
                 })
             )
     }
@@ -82,28 +83,26 @@ export class OpenMeteoService {
         }
     }
 
-    getVariableValue(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: keyof ForecastParams, variable: ForecastVariablesEnum): null | number | undefined {
+    getVariableValue(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number | null {
         const index = this.getVariableIndex(params, paramKey, variable);
         if (index === -1) return null;
 
         const variables = weatherApi?.variables(index)
 
-        return variables?.value()
+        return variables?.value() ?? null;
     }
 
-    getVariableValueArray(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: keyof ForecastParams, variable: ForecastVariablesEnum): Float32Array | null | undefined {
+    getVariableValueArray(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): Float32Array | null {
         const index = this.getVariableIndex(params, paramKey, variable);
         if (index === -1) return null;
 
         const variables = weatherApi?.variables(index)
 
-        return variables?.valuesArray()
+        return variables?.valuesArray() ?? null;
     }
 
-    getVariableIndex(params: ForecastParams, paramKey: keyof ForecastParams, variable: ForecastVariablesEnum): number {
-        const value = params[paramKey]
-        if (!Array.isArray(value)) return -1;
-        return value.findIndex(v => v === variable)
+    getVariableIndex(params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number {
+        return params[paramKey].findIndex(v => v === variable)
     }
 
     getTimeSingle(weatherApi: VariablesWithTime | null, utcOffsetSeconds: number): Date | null {

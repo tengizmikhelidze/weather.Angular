@@ -1,6 +1,5 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Card} from "../../../shared/components/card/card";
-import {WeatherFacadeService} from "../weather-facade-service";
 
 @Component({
   selector: 'app-current-weather-card',
@@ -24,9 +23,4 @@ import {WeatherFacadeService} from "../weather-facade-service";
   styleUrl: './current-weather-card.scss',
 })
 export class CurrentWeatherCard {
-  protected readonly weatherFacadeService = inject(WeatherFacadeService);
-
-  constructor() {
-    this.weatherFacadeService.weatherData.subscribe({next: value => console.log(value)});
-  }
 }

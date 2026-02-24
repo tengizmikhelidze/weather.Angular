@@ -40,3 +40,5 @@ export interface ForecastParams {
     wind_speed_unit: WindUnitsEnums
     precipitation_unit: PrecipitationUnitsEnums
 }
+
+export type ForecastParamsArrayKeys = 'daily' | 'hourly' | 'current';
