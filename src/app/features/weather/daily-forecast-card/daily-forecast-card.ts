@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {Card} from "../../../shared/components/card/card";
 import {OpenMeteoService} from "../../../core/services/open-meteo-service";
 import {DatePipe} from "@angular/common";
@@ -76,7 +76,7 @@ import {WeatherIconPipe} from "../../../shared/pipes/weather-icon-pipe";
           display: flex;
           align-items: center;
           justify-content: space-between;
-          
+
           .min {
             color: var(--color-text-tertiary);
           }
@@ -89,11 +89,4 @@ export class DailyForecastCard {
     maxTemperatures = computed(() => this.openMeteoService.weatherState()?.daily?.temperature_2m_max)
     minTemperatures = computed(() => this.openMeteoService.weatherState()?.daily?.temperature_2m_min)
     weatherCodes = computed(() => this.openMeteoService.weatherState()?.daily?.weather_code)
-
-    constructor() {
-        effect(() => {
-            console.log(this.openMeteoService.weatherState()?.daily?.weather_code);
-        });
-    }
-
 }

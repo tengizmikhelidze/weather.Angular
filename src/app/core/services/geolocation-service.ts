@@ -65,7 +65,6 @@ export class GeolocationService {
         if (!('geolocation' in navigator)) return;
 
         navigator.geolocation.getCurrentPosition((location) => {
-            console.log(location)
             this.#geolocationPosition.set(location);
         });
     }

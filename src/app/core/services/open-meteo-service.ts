@@ -15,7 +15,6 @@ import {ForecastVariablesEnum} from "../enums/forecast-variables-enums";
 import {MathUtils} from "../utils/math-utils";
 import {UnitsService} from "../../shared/components/menus/units/units-service";
 import {GeolocationService} from "./geolocation-service";
-import {IpLocation} from "../interfaces/ip-location-interfaces";
 
 @Injectable({
     providedIn: 'root',
@@ -38,12 +37,11 @@ export class OpenMeteoService {
         const wind_speed_unit = this.unitsService.wind_speed_unit();
         const precipitation_unit = this.unitsService.precipitation_unit();
         const locationPosition: GeolocationPosition | null = this.geolocationService.geolocationPosition();
-        const ipLocation: IpLocation = this.geolocationService.ipLocation();
 
         const params: ForecastParams = {
             latitude: locationPosition.coords.latitude,
             longitude: locationPosition.coords.longitude,
-            timezone: ipLocation.timezone,
+            forecast_hours: 12,
             daily: [
                 ForecastVariablesEnum.weather_code,
                 ForecastVariablesEnum.temperature_2m_mean,
@@ -67,7 +65,7 @@ export class OpenMeteoService {
 
         return from(fetchWeatherApi(url, params))
             .pipe(
-                shareReplay({bufferSize: 1, refCount: true}),
+                shareReplay(1),
                 map(data => this.transformWeatherApiToForecast(data[0], params)),
                 tap(transformedData => {
                     this.#weatherState.set(transformedData)
@@ -117,7 +115,7 @@ export class OpenMeteoService {
 
     getVariableValue(weatherApi: VariablesWithTime | null, params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number | null {
         const index = this.getVariableIndex(params, paramKey, variable);
-        if (index === -1) return null;
+        if (index === undefined || index === -1) return null;
 
         const variables = weatherApi?.variables(index)
 
@@ -131,7 +129,7 @@ export class OpenMeteoService {
         variable: ForecastVariablesEnum
     ): number[] {
         const index = this.getVariableIndex(params, paramKey, variable);
-        if (index === -1) return [];
+        if (index === undefined || index === -1) return [];
 
         const values = weatherApi?.variables(index)?.valuesArray();
         if (!values) return [];
@@ -140,8 +138,8 @@ export class OpenMeteoService {
         return MathUtils.roundArray(toNumbers);
     }
 
-    getVariableIndex(params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number {
-        return params[paramKey].findIndex(v => v === variable)
+    getVariableIndex(params: ForecastParams, paramKey: ForecastParamsArrayKeys, variable: ForecastVariablesEnum): number | undefined {
+        return params[paramKey]?.findIndex(v => v === variable)
     }
 
     getTimeSingle(weatherApi: VariablesWithTime | null, utcOffsetSeconds: number): Date | null {

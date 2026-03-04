@@ -36,15 +36,17 @@ export interface CurrentForecast {
 }
 
 export interface ForecastParams {
-    latitude: number
-    longitude: number
-    timezone: string
-    daily: ForecastVariablesEnum[]
-    hourly: ForecastVariablesEnum[]
-    current: ForecastVariablesEnum[]
-    temperature_unit: TemperatureUnitsEnums
-    wind_speed_unit: WindUnitsEnums
-    precipitation_unit: PrecipitationUnitsEnums
+    latitude?: number
+    longitude?: number
+    forecast_hours?: number
+    past_hours?: number
+    timezone?: string
+    daily?: ForecastVariablesEnum[]
+    hourly?: ForecastVariablesEnum[]
+    current?: ForecastVariablesEnum[]
+    temperature_unit?: TemperatureUnitsEnums
+    wind_speed_unit?: WindUnitsEnums
+    precipitation_unit?: PrecipitationUnitsEnums
 }
 
 export type ForecastParamsArrayKeys = 'daily' | 'hourly' | 'current';

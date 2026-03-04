@@ -7,7 +7,6 @@ import {WMO} from "../../core/enums/weather-interpretation-codes-enum";
 export class WeatherIconPipe implements PipeTransform {
 
     transform(value: WMO): string {
-        console.log(value)
 
         if (WMO.ClearSky === value) {
             return "icon-sunny.webp"
